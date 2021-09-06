@@ -1,16 +1,18 @@
 const express = require("express")
 const cors = require("cors")
-
+const {
+    authRoutes
+} = require("./routes/auth");
+const passport = require("./passport");
 const app = express();
 
-const PORT = 3400;
+const PORT = 3200;
 
 app.use(express.json());
 app.use(express.urlencoded({
     extended: false
 }))
 app.use(cors());
-
 app.get('/', async (request, response) => {
     //response.send("test");
     response.status(400).json({
@@ -26,11 +28,6 @@ app.get('/details', async (request, response) => {
     console.log(request.query);
 });
 
-app.post('/login', async (request, response) => {
-    console.log(request.body)
-    // response.send(request.body)
-    let bodyRes = request.body;
-    bodyRes.password == "testpass" && bodyRes.username == "test" ? response.send(request.body) : response.status(401).send("Wrong username & password")
-});
-
+app.use(passport.initialize());
+authRoutes(app, passport);
 app.listen(PORT, () => console.log(`App available on port ${PORT}`))
