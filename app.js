@@ -3,6 +3,9 @@ const cors = require("cors")
 const {
     authRoutes
 } = require("./routes/auth");
+const {
+    UsersRoutes
+} = require("./routes/users");
 const passport = require("./passport");
 const app = express();
 
@@ -30,4 +33,5 @@ app.get('/details', async (request, response) => {
 
 app.use(passport.initialize());
 authRoutes(app, passport);
+UsersRoutes(app, passport);
 app.listen(PORT, () => console.log(`App available on port ${PORT}`))

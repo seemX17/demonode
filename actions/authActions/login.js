@@ -4,9 +4,16 @@ const jwt = require("jsonwebtoken");
 const config = require("../../config");
 
 module.exports.Login = async (req, res) => {
-    let username = req.body.username;
-    let password = req.body.password;
-    console.log(req.body)
+    let validation = validateRequest(req.body);
+    if (validation) {
+        res.status(400).send(validation);
+        return;
+    }
+    const {
+        username,
+        password
+    } = req.body;
+
     let user = await models.users.findOne({
         where: {
             email: username,
@@ -28,9 +35,16 @@ module.exports.Login = async (req, res) => {
     res.json({
         token,
         user: {
+            id: user.id,
             name: user.name,
             email: user.email,
             createdAt: user.createdAt
         }
     })
+}
+
+function validateRequest(body) {
+    if (!body.username || !body.password) {
+        return "missing attribute username/password"
+    }
 }

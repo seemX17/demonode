@@ -10,6 +10,7 @@ const authRoutes = (app, passport) => {
     }), AuthController.validate)
 
     app.post("/auth/signup", AuthController.signup)
+
 }
 
 module.exports.authRoutes = authRoutes;
