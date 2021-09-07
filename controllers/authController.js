@@ -2,6 +2,9 @@ const models = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
+const {
+    Login
+} = require("../actions/authActions/login");
 
 class AuthController {
     constructor(req, res) {
@@ -10,35 +13,7 @@ class AuthController {
     }
 
     async login() {
-        let username = this.req.body.username;
-        let password = this.req.body.password;
-        console.log(this.req.body)
-        let user = await models.users.findOne({
-            where: {
-                email: username,
-            }
-        });
-        if (!user) {
-            this.res.status(404).send("User doesn't exist!");
-        }
-
-        if (!(await bcrypt.compare(password, user.password))) {
-            this.res.status(400).send("Incorrect password!");
-        }
-
-        var jwtPayload = {
-            id: user.id,
-            email: user.email
-        }
-        let token = jwt.sign(jwtPayload, config.secret)
-        this.res.json({
-            token,
-            user: {
-                name: user.name,
-                email: user.email,
-                createdAt: user.createdAt
-            }
-        })
+        Login(this.req, this.res)
     }
 
     async validate() {
