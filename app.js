@@ -7,6 +7,9 @@ const {
     UsersRoutes
 } = require("./routes/users");
 const passport = require("./passport");
+const {
+    BookRoutes
+} = require("./routes/book");
 const app = express();
 
 const PORT = 3200;
@@ -34,4 +37,5 @@ app.get('/details', async (request, response) => {
 app.use(passport.initialize());
 authRoutes(app, passport);
 UsersRoutes(app, passport);
+BookRoutes(app, passport);
 app.listen(PORT, () => console.log(`App available on port ${PORT}`))
