@@ -3,9 +3,13 @@ const {
 } = require("../controllers/bookController")
 
 const BookRoutes = (app, passport) => {
-    app.post("/book", passport.authenticate("jwt", {
+    app.post("/books", passport.authenticate("jwt", {
         session: false
     }), BookController.create)
+
+    app.get("/books", passport.authenticate("jwt", {
+        session: false
+    }), BookController.getAll)
 }
 
 module.exports.BookRoutes = BookRoutes

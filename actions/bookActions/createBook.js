@@ -13,7 +13,7 @@ module.exports.CreateBook = async (req, res) => {
 
     let book = await models.books.create({
         name: req.body.name,
-        author: author.id,
+        authorId: author.id,
         year: req.body.year
     });
 

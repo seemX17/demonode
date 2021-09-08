@@ -11,7 +11,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      author: {
+      authorId: {
         type: Sequelize.UUID,
         references: {
           model: "users",
